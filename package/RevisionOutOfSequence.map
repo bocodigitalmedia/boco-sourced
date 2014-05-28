@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "RevisionOutOfSequence.js",
+  "sourceRoot": "..",
+  "sources": [
+    "coffee/RevisionOutOfSequence.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA,KAAA,mCAAA;KAAA;oSAAA;;CAAA,CAAA,CAAe,IAAA,KAAf,IAAe;;CAAf,CAEA,CAAuB,GAAjB,CAAN;CACE;;;;;CAAA;;CAAA,EAAS,IAAT,sEAAA;;CAAA;;CADmD;CAFrD"
+}

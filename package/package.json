@@ -1,0 +1,11 @@
+{
+  "name": "boco-sourced",
+  "version": "0.0.0",
+  "description": "Event source support library for javascript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "coffee -l test/*.coffee.md"
+  },
+  "author": "Christian Bradley <christianbradley@gmail.com> (https://github.com/christianbradley)",
+  "license": "BSD-2-Clause"
+}
