@@ -1,0 +1,30 @@
+{
+  "name": "boco-sourced",
+  "version": "0.0.1",
+  "description": "Library to support event sourcing in Javascript.",
+  "homepage": "http://github.com/bocodigitalmedia/boco-sourced",
+  "main": "./package/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "cake test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bocodigitalmedia/boco-sourced"
+  },
+  "keywords": [
+    "event",
+    "source",
+    "sourcing",
+    "sourced",
+    "event-sourcing",
+    "boco"
+  ],
+  "author": "Christian Bradley <christianbradley@gmail.com> (https://github.com/christianbradley)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bocodigitalmedia/boco-sourced/issues"
+  }
+}
