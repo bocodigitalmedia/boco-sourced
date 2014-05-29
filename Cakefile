@@ -1,21 +1,18 @@
 ChildProcess = require 'child_process'
-
-COFFEE_PATH = "./coffee"
-TESTS_PATH = "./docs"
-BUILD_PATH = "./package"
-
+async = require 'async'
 logger = console
+
+COFFEE_PATH = "./node_modules/.bin/coffee"
+MODULE_NAME = require('./package.json').name
 
 # helper methods
 
-noop = (error, results...) ->
-  logger.error error if error?
+rethrow = (error) -> throw error if error?
 
-spawn = (command, args, options, callback = noop) ->
-  str = '• ' + command + ' ' + args.join ' '
-  logger.log str
+exec = (command, callback = rethrow) ->
+  logger.log "• #{command}"
 
-  proc = ChildProcess.spawn command, args, options
+  proc = ChildProcess.exec command
 
   proc.stdout.pipe process.stdout
   proc.stderr.pipe process.stderr
@@ -25,33 +22,30 @@ spawn = (command, args, options, callback = noop) ->
     callback error if callback?
 
   proc.on 'exit', (code, signal) ->
-    (callback null, code, signal) if callback?
+    if code is 0
+      callback(null)
+    else
+      callback new Error("Process exited with code: #{code}")
+
+coffee = (args, done) ->
+  exec "#{COFFEE_PATH} #{args}", done
 
 # Task methods
 
-compile = (options, callback = noop) ->
-  args = ['-cmo', BUILD_PATH, COFFEE_PATH]
-  spawn 'coffee', args, null, callback
+compile = (done) ->
+  coffee '--compile --map --output ./package/ ./coffee/', done
 
-install = (options, callback = noop) ->
-  spawn 'npm', ['install', BUILD_PATH], null, callback
+linkToGlobal = (done) ->
+  exec 'npm link', done
 
-test = (options, callback = noop) ->
-  if options.file?
-    spawn 'coffee', ['-l', options.file], null, callback
-  else
-    args = ['-l', options.file || TESTS_PATH]
-    spawn 'coffee', args, null, callback
+linkLocally = (done) ->
+  exec "npm link #{MODULE_NAME}", done
 
-watch = (options, callback = noop) ->
-  args = ['-cwmo', BUILD_PATH, COFFEE_PATH]
-  spawn 'coffee', args, null, callback
+test = (done) ->
+  coffee '--literate ./docs/*.coffee.md', done
 
+task 'compile', 'Compile coffee files', ->
+  compile rethrow
 
-option '-f', '--file [filename]', 'Use [filename] for the given task'
-option '-v', '--verbose', 'Display additional information'
-
-task 'compile', 'Compile coffee files', compile
-task 'watch', 'Watch coffee files and compile', watch
-task 'install', 'Install the sourced package for testing', install
-task 'test', 'Execute tests', test
+task 'test', 'Execute tests', ->
+  async.series [compile, linkToGlobal, linkLocally, test], rethrow
