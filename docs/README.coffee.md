@@ -1,4 +1,4 @@
-Sourced
+boco-sourced
 ================================================================================
 
 Sourced is a module designed to support [event sourcing] in javascript. It provides methods for storing revisions (collections of events that have occurred atomically within a resource's lifecycle) as well as building views of resources through the application of events.
@@ -12,7 +12,7 @@ Installation
 Install Sourced by using [npm]:
 
 ```sh
-npm install node-sourced
+npm install boco-sourced
 ```
 
 README Driven Development
