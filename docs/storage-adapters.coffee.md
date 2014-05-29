@@ -8,15 +8,14 @@ In order to persist revisions, you need to configure Sourced with one of the ava
 
 ### Available Adapters
 
-* __MongoDb__
-  * [sourced-storage-mongojs] uses the MongoJs library for MongoDb
+  * [boco-sourced-mongodb] official MongoDB storage adapter
 
 Request an adapter
 --------------------------------------------------------------------------------
 
 To request an adapter:
 
-1. Go to the [sourced-storage-abstract] repository and [create an issue]
+1. Go to the [boco-sourced] repository and [create an issue]
 2. In the title field, type something like "Adapter request: MyDatabase", where "MyDatabase" is the name of the database you're using
 3. Add a brief description to the issue
 4. Under "Add Labels", click "enhancement"
@@ -25,26 +24,18 @@ To request an adapter:
 Create an Adapter
 --------------------------------------------------------------------------------
 
-If you'd like to create your own storage adapter for Sourced, follow the instructions below.
+We're still working on the documentation for creating your own adapter. For now, you're better off requesting an adapter and then working with us to get it off the ground. We hope to have documentation very soon.
 
-### Select a name for your repository
+However, the interface for the storage adapter is fairly simple. Take a look at one of the available adapter repositories, and you should be able to hack something together quickly.
 
-If you are creating an adapter for postgresql using the `pg` library, name your repository `sourced-storage-pg`. Head over to http://npmjs.org and make sure a package with that name does not currently exist.
-
-### Fork the abstract repository
-
-The `sourced-storage-abstract` repository serves as a good starting point for creating your adapter. Head over to the [sourced-storage-abstract] repository page on github, or just [fork the repository] right now. 
-
+If you do create an adapter, please [create an issue] to let us know about it and we'll add it to the list of available adapters.
 
 <!-- Links below this comment -->
 
-[sourced-storage-mongojs]: https://github.com/christianbradley/sourced-storage-mongojs
+[boco-sourced]: http://github.com/bocodigitalmedia/boco-sourced
+[boco-sourced-mongodb]: http://github.com/bocodigitalmedia/boco-sourced-mongodb
 
-[sourced-storage-abstract]: https://github.com/christianbradley/sourced-storage-abstract
-
-[fork the repository]: https://github.com/christianbradley/sourced-storage-abstract/fork
-
-[create an issue]: https://github.com/christianbradley/sourced-storage-abstract/issues/new
+[create an issue]: http://github.com/bocodigitalmedia/boco-sourced/issues/new
 
 [create an adapter]: #create-an-adapter
 [request an adapter]: #request-an-adapter

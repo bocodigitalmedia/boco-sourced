@@ -331,7 +331,7 @@ The second revision should have set the `name` and `title` by applying the `Prof
 
 
 
-[storage adapters]: ./storage-adapters.coffee.md
+[storage adapters]: http://github.com/bocodigitalmedia/boco-sourced/blob/master/docs/storage-adapters.coffee.md
 [sinon]: http://sinonjs.org
 [uuid]: http://wikipedia.org/wiki/Uuid
 [promise]: http://promises-aplus.github.io/promises-spec/
