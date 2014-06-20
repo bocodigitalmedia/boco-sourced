@@ -42,7 +42,7 @@ linkLocally = (done) ->
   exec "npm link #{MODULE_NAME}", done
 
 test = (done) ->
-  coffee '--literate ./docs/*.coffee.md', done
+  coffee '--literate ./README.md', done
 
 task 'compile', 'Compile coffee files', ->
   compile rethrow

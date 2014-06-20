@@ -25,7 +25,6 @@ This document is written in [literate coffeescript]. When executed via the `coff
 coffee -l docs/*.coffee.md
 ```
 
----
 
 Usage
 ================================================================================
