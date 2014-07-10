@@ -18,7 +18,7 @@ module.exports = class MemoryStorage
 
     callback null, revisions
 
-  store: (revision, callback) ->
+  storeRevision: (revision, callback) ->
     revisionId = [
         revision.resourceType,
         revision.resourceId,

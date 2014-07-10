@@ -24,7 +24,7 @@ module.exports = class Service
       resourceVersion: version
 
   storeRevision: (revision, callback) ->
-    @storage.store revision, callback
+    @storage.storeRevision revision, callback
 
   createSchema: (resourceType) ->
     new Schema resourceType: resourceType

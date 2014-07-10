@@ -44,7 +44,7 @@
     };
 
     Service.prototype.storeRevision = function(revision, callback) {
-      return this.storage.store(revision, callback);
+      return this.storage.storeRevision(revision, callback);
     };
 
     Service.prototype.createSchema = function(resourceType) {

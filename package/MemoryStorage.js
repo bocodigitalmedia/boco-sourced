@@ -36,7 +36,7 @@
       return callback(null, revisions);
     };
 
-    MemoryStorage.prototype.store = function(revision, callback) {
+    MemoryStorage.prototype.storeRevision = function(revision, callback) {
       var error, previousId, revisionId;
       revisionId = [revision.resourceType, revision.resourceId, revision.resourceVersion].join(',');
       if (this.collection[revisionId] != null) {
