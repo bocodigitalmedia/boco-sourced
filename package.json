@@ -1,14 +1,15 @@
 {
   "name": "boco-sourced",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Library to support event sourcing in Javascript.",
   "homepage": "http://github.com/bocodigitalmedia/boco-sourced",
-  "main": "./package/index.js",
+  "main": "./lib/index.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
-    "test": "cake test"
+    "test": "./node_modules/coffee-script/bin/coffee -l README.md",
+    "compile": "rm -r ./lib && mkdir lib && ./node_modules/coffee-script/bin/coffee -cm -o lib coffee"
   },
   "repository": {
     "type": "git",
