@@ -1,33 +1,14 @@
 Event = require './Event'
+TypeFactory = require('boco-factory').TypeFactory
 
-class EventFactory
-
-  constructor: (properties = {}) ->
-    @constructors = properties.constructors
-    @defaultConstructor = properties.defaultConstructor
-    @setDefaults()
-
-  setDefaults: ->
-    @constructors ?= {}
-    @defaultConstructor ?= Event
-
-  register: (constructors = {}) ->
-    @constructors[key] = constructor for own key,constructor of constructors
-
-  isRegistered: (type) ->
-    @constructors.hasOwnProperty type
-
-  getConstructor: (type) ->
-    if @isRegistered(type) then @constructors[type] else @defaultConstructor
+class EventFactory extends TypeFactory
 
   construct: (type, properties) ->
-    EventConstructor = @getConstructor type
-    event = new EventConstructor properties
-    event = @decorate event
-    event.type = type
-    return event
-
-  decorate: (event) ->
-    return event
+    properties.type ?= type
+    super type, properties
+    
+  setDefaults: ->
+    @defaultConstructor ?= Event
+    super()
 
 module.exports = EventFactory
