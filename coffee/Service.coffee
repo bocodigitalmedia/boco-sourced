@@ -1,6 +1,7 @@
 MemoryStorage = require './MemoryStorage'
 Revision = require './Revision'
 RevisionFactory = require './RevisionFactory'
+EventFactory = require './EventFactory'
 Schema = require './Schema'
 
 class Service
@@ -9,11 +10,13 @@ class Service
     @storage = config.storage
     @schemas = config.schemas
     @revisionFactory = config.revisionFactory
+    @eventFactory = config.eventFactory
     @setDefaults()
 
   setDefaults: ->
     @storage ?= new MemoryStorage()
     @revisionFactory ?= new RevisionFactory()
+    @eventFactory ?= new EventFactory()
     @schemas ?= {}
 
   createRevision: (type, uuid, version = 0) ->
@@ -21,6 +24,9 @@ class Service
       resourceType: type,
       resourceId: uuid,
       resourceVersion: version
+
+  createEvent: (type, payload) ->
+    @eventFactory.construct type, payload: payload
 
   storeRevision: (revision, callback) ->
     @storage.storeRevision revision, callback
@@ -38,6 +44,7 @@ class Service
     schema = @schemas[type]
     resource = schema.constructResource id
 
+    # TODO this may not handle large sets of revisions well...
     @storage.findRevisions type, id, (error, revisions) ->
       return callback(error) if error?
 

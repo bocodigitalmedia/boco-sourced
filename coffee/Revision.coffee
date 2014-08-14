@@ -11,15 +11,11 @@ class Revision
   setDefaults: ->
     @events ?= []
 
-  addEvent: (type, payload = {}) ->
-    event = new Event
-      resourceType: @resourceType,
-      resourceId: @resourceId,
-      resourceVersion: @resourceVersion,
-      type: type,
-      payload: payload,
-      index: @events.length
-
+  addEvent: (event) ->
+    event.resourceType = @resourceType
+    event.resourceId = @resourceId
+    event.resourceVersion = @resourceVersion
+    event.index = @events.length
     @events.push event
     return event
 

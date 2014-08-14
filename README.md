@@ -111,8 +111,10 @@ Adding events to a revision
 
 A revision must contain one or more events. Let's add a single event to our initial revision by passing in the event's `type` and `payload`:
 
-    revision.addEvent 'Registered',
+    event = sourced.createEvent 'Registered',
       username: 'john.doe', email: 'john.doe@example.com'
+
+    revision.addEvent event
 
 
 The revision maintains a collection of the events that have been added:
@@ -296,8 +298,10 @@ Let's say that at some point, the user has registered:
 
     rev0 = sourced.createRevision 'User', userId
 
-    rev0.addEvent 'Registered',
+    event = sourced.createEvent 'Registered',
       username: 'john.doe', email: 'john.doe@example.com'
+
+    rev0.addEvent event
 
     sourced.storeRevision rev0, (error) ->
       throw error if error?
@@ -306,8 +310,10 @@ Let's add another revision, in which the user updated their profile information:
 
       rev1 = sourced.createRevision 'User', userId, 1
 
-      rev1.addEvent 'ProfileUpdated',
+      event = sourced.createEvent 'ProfileUpdated',
         name: 'John Doe', title: 'Software Developer'
+
+      rev1.addEvent event
 
       sourced.storeRevision rev1, (error) ->
         throw error if error?
