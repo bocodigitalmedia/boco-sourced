@@ -7,6 +7,10 @@ module.exports = class Event
     @index = props.index
     @type = props.type
     @setPayload props.payload
+    @setDefaults()
+
+  setDefaults: ->
+    @type ?= @constructor.name
 
   setPayload: (payload) ->
     @payload = constructPayload payload
