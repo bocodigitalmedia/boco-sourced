@@ -1,5 +1,6 @@
 MemoryStorage = require './MemoryStorage'
 Revision = require './Revision'
+RevisionFactory = require './RevisionFactory'
 Schema = require './Schema'
 
 class Service
@@ -7,18 +8,16 @@ class Service
   constructor: (config = {}) ->
     @storage = config.storage
     @schemas = config.schemas
+    @revisionFactory = config.revisionFactory
     @setDefaults()
 
   setDefaults: ->
     @storage ?= new MemoryStorage()
+    @revisionFactory ?= new RevisionFactory()
     @schemas ?= {}
 
-  generateUUId: ->
-    require('uuid').v4()
-
   createRevision: (type, uuid, version = 0) ->
-    uuid = @generateUUId() unless uuid?
-    new Revision
+    @revisionFactory.construct
       resourceType: type,
       resourceId: uuid,
       resourceVersion: version

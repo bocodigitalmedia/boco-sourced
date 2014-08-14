@@ -88,16 +88,16 @@ You may omit both the `identity` and `version` parameters, and sane defaults wil
 
 By default, a [uuid] will be generated for the resource's identity.
 
-You can override the default uuid generator by replacing the `generateUUId` method with your own. Let's demonstrate that behavior:
+You can override the default uuid generator by replacing the `generateId` method on the `revisionFactory` with your own. Let's demonstrate that behavior:
 
-    sourced.generateUUId = -> '83ff08d6-d23c-4431-8613-dd5aa3da5e4b'
+    sourced.revisionFactory.generateId = -> '83ff08d6-d23c-4431-8613-dd5aa3da5e4b'
 
     revision = sourced.createRevision 'User'
     assert.equal '83ff08d6-d23c-4431-8613-dd5aa3da5e4b', revision.resourceId
 
 We don't want to leave that stubbed generator method there, so let's restore the original. Since the original method was defined on the service's `prototype`, we can just delete the overriden property:
 
-    delete sourced.generateUUId
+    delete sourced.revisionFactory.generateId
 
 #### revision.resourceVersion
 
