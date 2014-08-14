@@ -260,8 +260,14 @@ As well as our handler for `ProfileUpdated`:
 Applying an event that has no defined handler should throw an `EventHandlerUndefined` error:
 
     undefinedEvent = type: 'UndefinedEvent', payload: { foo: 'bar' }
-    shouldThrow = -> schema.applyEvent user, undefinedEvent
-    assert.throws shouldThrow, Sourced.EventHandlerUndefined
+
+    shouldThrow = ->
+      schema.applyEvent user, undefinedEvent
+
+    isCorrectError = (error) ->
+      error instanceof Sourced.EventHandlerUndefined
+
+    assert.throws shouldThrow, isCorrectError
 
 Registering a schema
 --------------------------------------------------------------------------------

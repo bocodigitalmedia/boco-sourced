@@ -1,4 +1,5 @@
 Resource = require './Resource'
+EventHandlerUndefined = require './EventHandlerUndefined'
 
 class Schema
 
@@ -24,6 +25,13 @@ class Schema
     @handlers.hasOwnProperty type
 
   applyEvent: (resource, event) ->
-    @handlers[event.type].call null, resource, event
+    handler = @handlers[event.type]
+
+    unless handler?
+      error = new EventHandlerUndefined
+      error.setPayload type: event.type
+      throw error
+
+    handler.call null, resource, event
 
 module.exports = Schema

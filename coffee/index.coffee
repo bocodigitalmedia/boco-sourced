@@ -1,6 +1,7 @@
 Sourced = exports
 
 exports.Event = require './Event'
+exports.EventHandlerUndefined = require './EventHandlerUndefined'
 exports.MemoryStorage = require './MemoryStorage'
 exports.Resource = require './Resource'
 exports.Revision = require './Revision'

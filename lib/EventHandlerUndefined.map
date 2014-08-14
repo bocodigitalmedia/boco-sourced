@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "EventHandlerUndefined.js",
+  "sourceRoot": "..",
+  "sources": [
+    "coffee/EventHandlerUndefined.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA,KAAA,mCAAA;KAAA;oSAAA;;CAAA,CAAA,CAAe,IAAA,KAAf,IAAe;;CAAf,CAEM;CACJ;;;;;CAAA;;CAAA,EAAa,MAAA,EAAb;;CACG,EAAW,CAAX,IAAD;QAAA;CADW,YAEX,wCAAA;CAFF,IAAa;;CAAb;;CADkC;;CAFpC,CAOA,CAAiB,GAAX,CAAN,cAPA;CAAA"
+}

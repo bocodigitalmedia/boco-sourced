@@ -1,6 +1,8 @@
 SourcedError = require './SourcedError'
 
 class RevisionConflict extends SourcedError
-  message: 'A conflict has occurred with an existing revision.'
+  setDefaults: ->
+    @message ?= 'A conflict has occurred with an existing revision.'
+    super()
 
 module.exports = RevisionConflict
