@@ -6,4 +6,10 @@ module.exports = class Event
     @resourceVersion = props.resourceVersion
     @index = props.index
     @type = props.type
-    @payload = props.payload
+    @setPayload props.payload
+
+  setPayload: (payload) ->
+    @payload = constructPayload payload
+
+  constructPayload: (properties = {}) ->
+    return properties
