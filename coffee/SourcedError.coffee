@@ -8,6 +8,4 @@ module.exports = class SourcedError extends Error
     @setDefaults()
 
   setDefaults: ->
-    @name = @constructor.name unless @name?
-
-  message: 'An error has occurred.'
+    @name ?= @constructor.name

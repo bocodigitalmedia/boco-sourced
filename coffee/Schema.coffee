@@ -8,7 +8,7 @@ module.exports = class Schema
     @setDefaults()
 
   setDefaults: ->
-    @handlers = {}
+    @handlers ?= {}
 
   constructResource: (resourceId) ->
     new Resource id: resourceId

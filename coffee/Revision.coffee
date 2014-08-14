@@ -9,7 +9,7 @@ module.exports = class Revision
     @setDefaults()
 
   setDefaults: ->
-    @events = []
+    @events ?= []
 
   addEvent: (type, payload = {}) ->
     event = new Event

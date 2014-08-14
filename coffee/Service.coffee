@@ -10,8 +10,8 @@ module.exports = class Service
     @setDefaults()
 
   setDefaults: ->
-    @storage = new MemoryStorage() unless @storage?
-    @schemas = {}
+    @storage ?= new MemoryStorage()
+    @schemas ?= {}
 
   generateUUId: ->
     require('uuid').v4()

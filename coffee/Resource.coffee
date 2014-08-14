@@ -6,4 +6,4 @@ module.exports = class Resource
     @setDefaults()
 
   setDefaults: ->
-    @version = 0 unless @version?
+    @version ?= 0

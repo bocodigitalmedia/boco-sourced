@@ -7,7 +7,7 @@ module.exports = class MemoryStorage
     @setDefaults()
 
   setDefaults: ->
-    @collection = {} unless @collection?
+    @collection ?= {}
 
   findRevisions: (type, id, callback) ->
     revisions = []
