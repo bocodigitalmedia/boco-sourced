@@ -1,12 +1,14 @@
 Sourced = exports
 
-Sourced.Service = require './Service'
-Sourced.Revision = require './Revision'
-Sourced.MemoryStorage = require './MemoryStorage'
-Sourced.RevisionConflict = require './RevisionConflict'
-Sourced.RevisionOutOfSequence = require './RevisionOutOfSequence'
-Sourced.Resource = require './Resource'
-Sourced.Schema = require './Schema'
+exports.Event = require './Event'
+exports.MemoryStorage = require './MemoryStorage'
+exports.Resource = require './Resource'
+exports.Revision = require './Revision'
+exports.RevisionConflict = require './RevisionConflict'
+exports.RevisionOutOfSequence = require './RevisionOutOfSequence'
+exports.Schema = require './Schema'
+exports.Service = require './Service'
+exports.SourcedError = require './SourcedError'
 
-Sourced.createService = (config) ->
+exports.createService = (config) ->
   new Sourced.Service config
