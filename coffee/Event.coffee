@@ -13,7 +13,7 @@ module.exports = class Event
     @type ?= @constructor.name
 
   setPayload: (payload) ->
-    @payload = constructPayload payload
+    @payload = @constructPayload payload
 
   constructPayload: (properties = {}) ->
     return properties

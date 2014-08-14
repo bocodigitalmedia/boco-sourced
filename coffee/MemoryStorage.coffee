@@ -11,31 +11,31 @@ module.exports = class MemoryStorage
 
   findRevisions: (type, id, callback) ->
     revisions = []
-
-    for own key, revision of @collection
-      if revision.resourceType is type and revision.resourceId is id
-        revisions.push revision
-
+    revisions.push rev for own key,rev of @collection when rev.resourceId is id
     callback null, revisions
 
-  storeRevision: (revision, callback) ->
-    revisionId = [
-        revision.resourceType,
-        revision.resourceId,
-        revision.resourceVersion
-      ].join(',')
+  createRevisionId: (rev) ->
+    [rev.resourceType, rev.resourceId, rev.resourceVersion].join ','
 
-    if @collection[revisionId]?
+  exists: (revisionId) ->
+    @collection.hasOwnProperty revisionId
+
+  isOutOfSequence: (revision) ->
+    return false if revision.resourceVersion is 0
+    previousId = @createRevisionId
+      resourceType: revision.resourceType
+      resourceId: revision.resourceId
+      resourceVersion: revision.resourceVersion - 1
+    return !@exists previousId
+
+  storeRevision: (revision, callback) ->
+    revisionId = @createRevisionId revision
+
+    if @exists revisionId
       error = new RevisionConflict()
       return callback(error)
 
-    previousId = [
-      revision.resourceType,
-      revision.resourceId,
-      revision.resourceVersion - 1
-    ].join(',')
-
-    unless revision.resourceVersion is 0 or @collection[previousId]?
+    if @isOutOfSequence revision
       error = new RevisionOutOfSequence()
       return callback(error)
 
