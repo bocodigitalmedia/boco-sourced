@@ -1,11 +1,5 @@
-module.exports = class SourcedError extends Error
+CustomError = require('boco-error').CustomError
 
-  constructor: (props = {}) ->
-    Error.call this
-    Error.captureStackTrace this, @constructor
-    @name = props.name
-    @message = props.message if props.message?
-    @setDefaults()
+class SourcedError extends CustomError
 
-  setDefaults: ->
-    @name ?= @constructor.name
+module.exports = SourcedError

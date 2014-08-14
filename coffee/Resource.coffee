@@ -1,4 +1,4 @@
-module.exports = class Resource
+class Resource
 
   constructor: (props = {}) ->
     @id = props.id
@@ -7,3 +7,5 @@ module.exports = class Resource
 
   setDefaults: ->
     @version ?= 0
+
+module.exports = Resource

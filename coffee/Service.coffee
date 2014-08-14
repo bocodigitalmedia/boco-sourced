@@ -2,7 +2,7 @@ MemoryStorage = require './MemoryStorage'
 Revision = require './Revision'
 Schema = require './Schema'
 
-module.exports = class Service
+class Service
 
   constructor: (config = {}) ->
     @storage = config.storage
@@ -50,3 +50,5 @@ module.exports = class Service
           resource = schema.applyEvent resource, event
 
       callback null, resource
+
+module.exports = Service

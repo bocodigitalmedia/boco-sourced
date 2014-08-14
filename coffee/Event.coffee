@@ -1,4 +1,4 @@
-module.exports = class Event
+class Event
 
   constructor: (props = {}) ->
     @resourceType = props.resourceType
@@ -17,3 +17,5 @@ module.exports = class Event
 
   constructPayload: (properties = {}) ->
     return properties
+
+module.exports = Event

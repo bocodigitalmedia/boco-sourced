@@ -1,7 +1,7 @@
 Resource = require './Resource'
 
+class Schema
 
-module.exports = class Schema
   constructor: (props = {}) ->
     @resourceType = props.resourceType
     @handlers = props.handlers
@@ -25,3 +25,5 @@ module.exports = class Schema
 
   applyEvent: (resource, event) ->
     @handlers[event.type].call null, resource, event
+
+module.exports = Schema

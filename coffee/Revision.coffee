@@ -1,6 +1,6 @@
 Event = require './Event'
 
-module.exports = class Revision
+class Revision
   constructor: (props = {}) ->
     @resourceType = props.resourceType
     @resourceId = props.resourceId
@@ -22,3 +22,5 @@ module.exports = class Revision
 
     @events.push event
     return event
+
+module.exports = Revision

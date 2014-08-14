@@ -1,7 +1,7 @@
 RevisionConflict = require './RevisionConflict'
 RevisionOutOfSequence = require './RevisionOutOfSequence'
 
-module.exports = class MemoryStorage
+class MemoryStorage
   constructor: (props = {}) ->
     @collection = props.collection
     @setDefaults()
@@ -41,3 +41,5 @@ module.exports = class MemoryStorage
 
     @collection[revisionId] = revision
     callback()
+
+module.exports = MemoryStorage
