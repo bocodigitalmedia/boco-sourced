@@ -1,6 +1,6 @@
 {
   "name": "boco-sourced",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Library to support event sourcing in Javascript.",
   "homepage": "http://github.com/bocodigitalmedia/boco-sourced",
   "main": "./lib/index.js",
