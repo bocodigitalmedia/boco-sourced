@@ -6,7 +6,7 @@ class EventFactory extends TypeFactory
   construct: (type, properties) ->
     properties.type ?= type
     super type, properties
-    
+
   setDefaults: ->
     @defaultConstructor ?= Event
     super()

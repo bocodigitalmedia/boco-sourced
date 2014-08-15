@@ -19,10 +19,11 @@ class Service
     @eventFactory ?= new EventFactory()
     @schemas ?= {}
 
-  createRevision: (type, uuid, version = 0) ->
+  createRevision: (domain, type, uuid, version = 0) ->
     @revisionFactory.construct
-      resourceType: type,
-      resourceId: uuid,
+      domain: domain
+      resourceType: type
+      resourceId: uuid
       resourceVersion: version
 
   createEvent: (type, payload) ->

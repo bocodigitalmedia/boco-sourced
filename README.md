@@ -69,13 +69,14 @@ Note that each of our configured dependencies appears as a property on the servi
 Creating revisions
 --------------------------------------------------------------------------------
 
-A revision represents a collection of events that have occurred atomically at a given point within a resource's lifecycle. To create a revision, pass in the resource `type`, `identity`, and the `version` of that resource to the service's `createRevision` method:
+A revision represents a collection of events that have occurred atomically at a given point within a resource's lifecycle. To create a revision, pass in the resource `domain`, `type`, `identity`, and the `version` of that resource to the service's `createRevision` method:
 
     userId = 'fcc6b227-3e52-40af-a1a3-b276ecf97daa'
-    revision = sourced.createRevision 'User', userId, 5
+    revision = sourced.createRevision 'Users', 'User', userId, 5
 
 The revision object should know about its associated resource:
 
+    assert.equal 'Users', revision.domain
     assert.equal 'User', revision.resourceType
     assert.equal 'fcc6b227-3e52-40af-a1a3-b276ecf97daa', revision.resourceId
     assert.equal 5, revision.resourceVersion
@@ -92,7 +93,7 @@ You can override the default uuid generator by replacing the `generateId` method
 
     sourced.revisionFactory.generateId = -> '83ff08d6-d23c-4431-8613-dd5aa3da5e4b'
 
-    revision = sourced.createRevision 'User'
+    revision = sourced.createRevision 'Users', 'User'
     assert.equal '83ff08d6-d23c-4431-8613-dd5aa3da5e4b', revision.resourceId
 
 We don't want to leave that stubbed generator method there, so let's restore the original. Since the original method was defined on the service's `prototype`, we can just delete the overriden property:
@@ -127,6 +128,7 @@ You can access the events by their index, just like an array:
 
 Each event will hold a reference to the resource:
 
+    assert.equal 'Users', event.domain
     assert.equal 'User', event.resourceType
     assert.equal '83ff08d6-d23c-4431-8613-dd5aa3da5e4b', event.resourceId
     assert.equal 0, event.resourceVersion
@@ -161,7 +163,7 @@ If you attempt to store a revision of a resource with a version that has previou
 
 If you attempt to store a revision with a version that is not in sequence (ie: it is not exactly 1 more than the previous version), a sequence error will be raised:
 
-      rev2 = sourced.createRevision 'User', revision.resourceId, 2
+      rev2 = sourced.createRevision 'Users', 'User', revision.resourceId, 2
 
       sourced.storeRevision rev2, (error) ->
         assert error instanceof Sourced.RevisionOutOfSequence
@@ -296,7 +298,7 @@ For these examples, we'll be working with a `User` resource with the following i
 
 Let's say that at some point, the user has registered:
 
-    rev0 = sourced.createRevision 'User', userId
+    rev0 = sourced.createRevision 'Users', 'User', userId
 
     event = sourced.createEvent 'Registered',
       username: 'john.doe', email: 'john.doe@example.com'
@@ -308,7 +310,7 @@ Let's say that at some point, the user has registered:
 
 Let's add another revision, in which the user updated their profile information:
 
-      rev1 = sourced.createRevision 'User', userId, 1
+      rev1 = sourced.createRevision 'Users', 'User', userId, 1
 
       event = sourced.createEvent 'ProfileUpdated',
         name: 'John Doe', title: 'Software Developer'

@@ -2,6 +2,7 @@ Event = require './Event'
 
 class Revision
   constructor: (props = {}) ->
+    @domain = props.domain
     @resourceType = props.resourceType
     @resourceId = props.resourceId
     @resourceVersion = props.resourceVersion
@@ -12,10 +13,11 @@ class Revision
     @events ?= []
 
   addEvent: (event) ->
-    event.resourceType = @resourceType
-    event.resourceId = @resourceId
-    event.resourceVersion = @resourceVersion
-    event.index = @events.length
+    event.domain ?= @domain
+    event.resourceType ?= @resourceType
+    event.resourceId ?= @resourceId
+    event.resourceVersion ?= @resourceVersion
+    event.index ?= @events.length
     @events.push event
     return event
 

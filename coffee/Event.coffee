@@ -1,6 +1,7 @@
 class Event
 
   constructor: (props = {}) ->
+    @domain = props.domain
     @resourceType = props.resourceType
     @resourceId = props.resourceId
     @resourceVersion = props.resourceVersion
