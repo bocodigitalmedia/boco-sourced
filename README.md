@@ -89,7 +89,7 @@ You may omit both the `identity` and `version` parameters, and sane defaults wil
 
 By default, a [uuid] will be generated for the resource's identity.
 
-You can override the default uuid generator by replacing the `generateId` method on the `revisionFactory` with your own. Let's demonstrate that behavior:
+You can override the default uuid generator by replacing the `generateId` method on the `revisionFactory` with your own.
 
     sourced.revisionFactory.generateId = -> '83ff08d6-d23c-4431-8613-dd5aa3da5e4b'
 
@@ -110,13 +110,12 @@ By default, the resource `version` will be set to `0`, meaning that the revision
 Adding events to a revision
 --------------------------------------------------------------------------------
 
-A revision must contain one or more events. Let's add a single event to our initial revision by passing in the event's `type` and `payload`:
+A revision should contain one or more events. Let's add a single event to our initial revision by passing in the event's `type` and a `payload` hash:
 
     event = sourced.createEvent 'Registered',
       username: 'john.doe', email: 'john.doe@example.com'
 
     revision.addEvent event
-
 
 The revision maintains a collection of the events that have been added:
 
@@ -126,7 +125,7 @@ You can access the events by their index, just like an array:
 
     event = revision.events[0]
 
-Each event will hold a reference to the resource:
+The revision's properties should be copied to the event:
 
     assert.equal 'Users', event.domain
     assert.equal 'User', event.resourceType
