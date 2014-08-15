@@ -329,11 +329,11 @@ Let's add another revision, in which the user updated their profile information:
 
 ### Hydrate a resource
 
-To hydrate a resource, just call the `hydrate` method, passing in the resource `type` and `identity`, followed by a `callback` that accepts an `error` and the hydrated `resource`:
+To hydrate a resource, just call the `hydrate` method, passing in the resource `domain`, `type` and `identity`, followed by a `callback` that accepts an `error` and the hydrated `resource`:
 
     step "hydrating a resource", (done) ->
 
-      sourced.hydrate 'User', userId, (error, user) ->
+      sourced.hydrate 'Users', 'User', userId, (error, user) ->
         throw error if error?
 
 The resource should have its `id` and `version` set:

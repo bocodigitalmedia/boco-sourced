@@ -9,13 +9,13 @@ class MemoryStorage
   setDefaults: ->
     @collection ?= {}
 
-  findRevisions: (type, id, callback) ->
+  findRevisions: (domain, type, id, callback) ->
     revisions = []
     revisions.push rev for own key,rev of @collection when rev.resourceId is id
     callback null, revisions
 
   createRevisionId: (rev) ->
-    [rev.resourceType, rev.resourceId, rev.resourceVersion].join ','
+    [rev.domain, rev.resourceType, rev.resourceId, rev.resourceVersion].join ','
 
   exists: (revisionId) ->
     @collection.hasOwnProperty revisionId
@@ -23,6 +23,7 @@ class MemoryStorage
   isOutOfSequence: (revision) ->
     return false if revision.resourceVersion is 0
     previousId = @createRevisionId
+      domain: revision.domain
       resourceType: revision.resourceType
       resourceId: revision.resourceId
       resourceVersion: revision.resourceVersion - 1

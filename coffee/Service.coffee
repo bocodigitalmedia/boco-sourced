@@ -41,12 +41,12 @@ class Service
   isSchemaRegisteredFor: (type) ->
     @schemas.hasOwnProperty type
 
-  hydrate: (type, id, callback) ->
+  hydrate: (domain, type, id, callback) ->
     schema = @schemas[type]
     resource = schema.constructResource id
 
     # TODO this may not handle large sets of revisions well...
-    @storage.findRevisions type, id, (error, revisions) ->
+    @storage.findRevisions domain, type, id, (error, revisions) ->
       return callback(error) if error?
 
       revisions.forEach (revision) ->
