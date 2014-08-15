@@ -37,6 +37,13 @@ In addition, the `assert` library will be used to demonstrate the results of var
 
     assert = require 'assert'
 
+We'll also use the `async` library:
+
+The following code is used to allow us to run asynchronous tests:
+
+    Async = require 'async'
+    steps = []
+    step = (name, fn) -> steps.push name: name, fn: fn
 
 Configuration
 --------------------------------------------------------------------------------
@@ -148,24 +155,28 @@ Storing revisions
 
 Now that we have an initial revision for our User, it needs to be persisted to storage so that we can rebuild our resource at a later point. To store a revision, call the `storeRevision` method, passing the `revision` object and an optional `callback` method:
 
-    sourced.storeRevision revision, (error) ->
-      throw error if error?
+    step "storing a revision", (done) ->
+      sourced.storeRevision revision, done
 
 ### Revision conflicts
 
 If you attempt to store a revision of a resource with a version that has previously been stored, a revision conflict will be raised:
 
+    step "storing a conflicting revision", (done) ->
       sourced.storeRevision revision, (error) ->
         assert error instanceof Sourced.RevisionConflict
+        done()
 
 ### Sequence errors
 
 If you attempt to store a revision with a version that is not in sequence (ie: it is not exactly 1 more than the previous version), a sequence error will be raised:
 
+    step "storing a revision out of sequence", (done) ->
       rev2 = sourced.createRevision 'Users', 'User', revision.resourceId, 2
 
       sourced.storeRevision rev2, (error) ->
         assert error instanceof Sourced.RevisionOutOfSequence
+        done()
 
 
 Defining a schema
@@ -297,51 +308,65 @@ For these examples, we'll be working with a `User` resource with the following i
 
 Let's say that at some point, the user has registered:
 
-    rev0 = sourced.createRevision 'Users', 'User', userId
-
-    event = sourced.createEvent 'Registered',
-      username: 'john.doe', email: 'john.doe@example.com'
-
-    rev0.addEvent event
-
-    sourced.storeRevision rev0, (error) ->
-      throw error if error?
+    registerUser = (done) ->
+      rev0 = sourced.createRevision 'Users', 'User', userId
+      event = sourced.createEvent 'Registered',
+        username: 'john.doe', email: 'john.doe@example.com'
+      rev0.addEvent event
+      sourced.storeRevision rev0, done
 
 Let's add another revision, in which the user updated their profile information:
 
+    updateProfile = (done) ->
       rev1 = sourced.createRevision 'Users', 'User', userId, 1
-
       event = sourced.createEvent 'ProfileUpdated',
         name: 'John Doe', title: 'Software Developer'
-
       rev1.addEvent event
+      sourced.storeRevision rev1, done
 
-      sourced.storeRevision rev1, (error) ->
-        throw error if error?
+    step "setup for hydration tests", (done) ->
+      Async.series [registerUser, updateProfile], done
 
 ### Hydrate a resource
 
 To hydrate a resource, just call the `hydrate` method, passing in the resource `type` and `identity`, followed by a `callback` that accepts an `error` and the hydrated `resource`:
 
-        sourced.hydrate 'User', userId, (error, user) ->
-          throw error if error?
+    step "hydrating a resource", (done) ->
+
+      sourced.hydrate 'User', userId, (error, user) ->
+        throw error if error?
 
 The resource should have its `id` and `version` set:
 
-          assert.equal '89e43652-9288-404e-a047-2fe94491ef29', user.id
-          assert.equal 2, user.version
+        assert.equal '89e43652-9288-404e-a047-2fe94491ef29', user.id
+        assert.equal 2, user.version
 
 The first revision should have set the `username` and `email` by applying the `Registered` event:
 
-          assert.equal 'john.doe', user.username
-          assert.equal 'john.doe@example.com', user.email
+        assert.equal 'john.doe', user.username
+        assert.equal 'john.doe@example.com', user.email
 
 The second revision should have set the `name` and `title` by applying the `ProfileUpdated` event:
 
-          assert.equal 'John Doe', user.name
-          assert.equal 'Software Developer', user.title
+        assert.equal 'John Doe', user.name
+        assert.equal 'Software Developer', user.title
 
+        done()
 
+<br><br><br><br><br>
+---
+
+_The following code runs the asynchronous tests in this README_
+
+    runStep = (step, done) ->
+      console.log "* #{step.name}"
+      step.fn done
+
+    cleanup = (error, done) ->
+      throw error if error?
+      console.log "Tests successful"
+
+    Async.eachSeries steps, runStep, cleanup
 
 [storage adapters]: http://github.com/bocodigitalmedia/boco-sourced/blob/master/docs/storage-adapters.coffee.md
 [sinon]: http://sinonjs.org
